@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addReminder, deleteReminder } from '../actions';
+import { addReminder, deleteReminder, clearAll } from '../actions';
 import moment from 'moment';
 
 
@@ -20,6 +20,11 @@ class App extends Component {
 
   deleteReminder(id){
     this.props.deleteReminder(id);
+  }
+
+  clearAll(){
+    console.log('Clear Reminders');
+    this.props.clearAll();
   }
 
   renderReminders(){
@@ -59,16 +64,13 @@ class App extends Component {
             <input
               className="form-control"
               placeholder="I have to..."
-              onChange={event => this.setState({text: event.target.value})}
-            />
+              onChange={event => this.setState({text: event.target.value})}/>
             <input
               className="form-control"
               type="datetime-local"
-              onChange={event => this.setState({dueDate: event.target.value})}
-            >
+              onChange={event => this.setState({dueDate: event.target.value})}>
             </input>
           </div>
-
           <button
             type="button"
             className="btn btn-success"
@@ -78,6 +80,11 @@ class App extends Component {
             </button>
         </div>
         {this.renderReminders()}
+        <button type="button"
+        className="butn btn-danger"
+        onClick={() => this.clearAll()}>
+          Clear All Reminders
+        </button>
       </div>
     )
   }
@@ -89,4 +96,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { addReminder, deleteReminder })(App);
+export default connect(mapStateToProps, { addReminder, deleteReminder, clearAll })(App);
